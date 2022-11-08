@@ -11,6 +11,8 @@ import {
 } from './state/book.actions';
 
 import { selectUrl, selectCurrentRoute, selectFragment, selectRouteData } from './state/router.selectors';
+import { TreeMenuNode } from './features/side-menu-tree/tree-menu-node.model';
+
 
 @Component({
   selector: 'app-root',
@@ -19,13 +21,56 @@ import { selectUrl, selectCurrentRoute, selectFragment, selectRouteData } from '
 })
 export class AppComponent {
 
-  constructor(private modalService: NgbModal, private store: Store) {
-  }
+sideMenu: TreeMenuNode[];
+selectedNode: TreeMenuNode;
+  
+  constructor(private modalService: NgbModal, private store: Store) { 
+    this.sideMenu = [
+      {
+        name: "Node1",
+        icon: "",
+        childNodes :[
+          {
+            name: "Node2",
+            icon: "",
+            expanded: false,
+            childNodes :[
+              {
+                childNodes :[],
+                name: "Node4",
+                icon: "bi-activity",
+                expanded: false
+              },
+              {
+                childNodes :[],
+                name: "Node5",
+                icon: "bi-activity",
+                expanded: false
+              }              
+            ]
+          },
+          {
+            childNodes :[],
+            name: "Node3",
+            icon: "bi-activity",
+            expanded: false
+          }
+        ],
+        payload: {},
+        expanded: false
+      }
+    ];
 
-  public open(modal: any): void {
-    this.modalService.open(modal);
-  }
+    this.selectedNode = {
+      childNodes:[],
+      name:"",
+      icon:"",
+      payload:{},
+      expanded:false
+    };
 
+  }
+ 
   books$ = this.store.select(selectBooks);
   bookCollection$ = this.store.select(selectBookCollection);
   
@@ -33,6 +78,8 @@ export class AppComponent {
   currentRoute$ = this.store.select(selectCurrentRoute).pipe(tap(f=>console.log("currentroute",f)), map(x=> JSON.stringify(x)));
   url$ = this.store.select(selectUrl).pipe(tap(f=>console.log("url", f)));
   routeData$ = this.store.select(selectRouteData).pipe(tap(f=>console.log("routedat", f)), map(x=> JSON.stringify(x)));
+
+ 
 
   onAdd(bookId: string) {
     this.store.dispatch(addBook({ bookId }));
@@ -46,5 +93,27 @@ export class AppComponent {
   ngOnInit() {
     this.store.dispatch(loadBookList());
   }
+
+  sideMenuLeafClick(node:TreeMenuNode) {
+    this.selectedNode = node;
+    //console.log("App Select node", JSON.stringify(this.sideMenu));
+
+    this.treeMenuStateReducer(this.sideMenu, node);
+
+    //this.sideMenu = [...this.sideMenu];
+    //console.log("App Select node", JSON.stringify(this.sideMenu));
+  }
+
+  treeMenuStateReducer(list:TreeMenuNode[], node:TreeMenuNode) {
+    list.forEach(e=>{
+      if (e===node) {
+        e.selected = true;
+      } else {
+        e.selected = false;
+      }
+      this.treeMenuStateReducer(e.childNodes, node);
+    });
+  }
+
 
 }

@@ -17,6 +17,11 @@ import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 import { Component1Component } from './temp/componets/component1/component1.component';
 import { Component2Component } from './temp/componets/component2/component2.component';
 import { Component3Component } from './temp/componets/component3/component3.component';
+import { SidebarComponent } from './temp/componets/sidebar/sidebar.component';
+import { SideMenuTreeComponent } from './features/side-menu-tree/side-menu-tree.component';
+import { SideMenuTreeNodeComponent } from './features/side-menu-tree/side-menu-tree-node/side-menu-tree-node.component';
+import { LoginComponent } from './features/login/login.component';
+
 
 @NgModule({
   declarations: [
@@ -25,7 +30,12 @@ import { Component3Component } from './temp/componets/component3/component3.comp
     BookCollectionComponent,
     Component1Component,
     Component2Component,
-    Component3Component
+    Component3Component,
+    SidebarComponent,
+    SideMenuTreeComponent,
+    SideMenuTreeNodeComponent,
+    LoginComponent,
+
   ],
   imports: [
     BrowserModule,
