@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
-import { of, tap, map } from 'rxjs';
+import { tap, map } from 'rxjs';
 
-import { selectBookCollection, selectBooks } from './state/books.selectors';
-import {
-  addBook,
-  removeBook,
-  loadBookList
-} from './state/book.actions';
+import { navigateTo } from './state/navigation.actions';
+import * as userActions from './state/user.actions';
+import * as routerSelectors from './state/router.selectors';
+import * as loaderSelectors from './state/loader.selector';
 
-import { selectUrl, selectCurrentRoute, selectFragment, selectRouteData } from './state/router.selectors';
 import { TreeMenuNode } from './features/side-menu-tree/tree-menu-node.model';
+import { selectUser } from './state/user.selectors';
+import { NavigationExtras } from '@angular/router';
 
 
 @Component({
@@ -71,37 +70,29 @@ selectedNode: TreeMenuNode;
 
   }
  
-  books$ = this.store.select(selectBooks);
-  bookCollection$ = this.store.select(selectBookCollection);
+  user$ = this.store.select(selectUser);
+  loader$ = this.store.select(loaderSelectors.selectLoader);
   
-  fragment$ = this.store.select(selectFragment).pipe(tap(f=>console.log("fragment", f)));
-  currentRoute$ = this.store.select(selectCurrentRoute).pipe(tap(f=>console.log("currentroute",f)), map(x=> JSON.stringify(x)));
-  url$ = this.store.select(selectUrl).pipe(tap(f=>console.log("url", f)));
-  routeData$ = this.store.select(selectRouteData).pipe(tap(f=>console.log("routedat", f)), map(x=> JSON.stringify(x)));
+  //test test
+  fragment$ = this.store.select(routerSelectors.selectFragment).pipe(tap(f=>console.log("fragment", f)));
+  currentRoute$ = this.store.select(routerSelectors.selectCurrentRoute).pipe(tap(f=>console.log("currentroute",f)), map(x=> JSON.stringify(x)));
+  url$ = this.store.select(routerSelectors.selectUrl).pipe(tap(f=>console.log("url", f)));
+  routeData$ = this.store.select(routerSelectors.selectRouteData).pipe(tap(f=>console.log("routedat", f)), map(x=> JSON.stringify(x)));
 
  
 
-  onAdd(bookId: string) {
-    this.store.dispatch(addBook({ bookId }));
+  onNavigate(url:string, params: NavigationExtras) {
+    this.store.dispatch(navigateTo({ url, params }));
   }
- 
-  onRemove(bookId: string) {
-    this.store.dispatch(removeBook({ bookId }));
-  }
- 
- 
+  
   ngOnInit() {
-    this.store.dispatch(loadBookList());
+
   }
 
   sideMenuLeafClick(node:TreeMenuNode) {
     this.selectedNode = node;
     //console.log("App Select node", JSON.stringify(this.sideMenu));
-
     this.treeMenuStateReducer(this.sideMenu, node);
-
-    //this.sideMenu = [...this.sideMenu];
-    //console.log("App Select node", JSON.stringify(this.sideMenu));
   }
 
   treeMenuStateReducer(list:TreeMenuNode[], node:TreeMenuNode) {
@@ -115,5 +106,13 @@ selectedNode: TreeMenuNode;
     });
   }
 
+  singIn() {
+
+  }
+
+  singOut() {
+    this.store.dispatch(navigateTo( {url: ""} ));
+    this.store.dispatch(userActions.logOut());
+  }
 
 }

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +21,14 @@ import { SidebarComponent } from './temp/componets/sidebar/sidebar.component';
 import { SideMenuTreeComponent } from './features/side-menu-tree/side-menu-tree.component';
 import { SideMenuTreeNodeComponent } from './features/side-menu-tree/side-menu-tree-node/side-menu-tree-node.component';
 import { LoginComponent } from './features/login/login.component';
+import { userReducer } from './state/user.reducer';
+import { UserEffects } from './effects/user.effects';
+import { NavigateEffects } from './effects/navigate.effects';
+import { HomeComponent } from './features/home/home.component';
+import { ErrorComponent } from './features/error/error.component';
+import { FormsModule } from '@angular/forms';
+import { loaderReducer } from './state/loader.reducer';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 
 @NgModule({
@@ -35,19 +43,42 @@ import { LoginComponent } from './features/login/login.component';
     SideMenuTreeComponent,
     SideMenuTreeNodeComponent,
     LoginComponent,
+    HomeComponent,
+    ErrorComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    StoreModule.forRoot({ books: booksReducer, collection: collectionReducer,router: routerReducer, }, {}),
-    EffectsModule.forRoot([BookEffects]),
+
+    StoreModule.forRoot({ 
+      books: booksReducer, 
+      collection: collectionReducer, 
+      router: routerReducer, 
+      user: userReducer,
+      loading: loaderReducer,
+      
+    }, {}),
+
+    EffectsModule.forRoot([
+      BookEffects,
+      UserEffects,
+      NavigateEffects,
+    ]),
+    
     HttpClientModule,
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     StoreRouterConnectingModule.forRoot(),
+    FormsModule
   ],
-  providers: [],
+  providers: [     
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
