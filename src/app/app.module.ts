@@ -29,6 +29,7 @@ import { ErrorComponent } from './features/error/error.component';
 import { FormsModule } from '@angular/forms';
 import { loaderReducer } from './state/loader.reducer';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
+import { SvgWinjet1Component } from './features/widjets/svg-winjet1/svg-winjet1.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { LoaderInterceptor } from './interceptors/loader.interceptor';
     LoginComponent,
     HomeComponent,
     ErrorComponent,
+    SvgWinjet1Component,
 
   ],
   imports: [
