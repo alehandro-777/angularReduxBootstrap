@@ -1,9 +1,8 @@
 <svg>
-  <g>
+  <g >
     <rect [attr.x]="x" [attr.y]="y" width="80" height="30" [attr.fill]="fillColor" (click)="onClick()" />
-    <text [attr.x]="x+10" [attr.y]="y+20" fill="black">{{value}}</text>
-    <text [attr.x]="x+10" [attr.y]="y+30" fill="white" font-size=".7em">{{value}}</text>
-
+    <text [attr.x]="x" [attr.y]="y" dx="10" dy="20" fill="black">{{value}}</text>
+    <text [attr.x]="x" [attr.y]="y" dx="10" dy="30" fill="white" font-size=".7em">{{value}}</text>
     <rect [attr.x]="x" [attr.y]="y" width="80" height="30" stroke="grey" stroke-width="1" fill="none" />
   </g>
 </svg>

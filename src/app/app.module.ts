@@ -30,6 +30,10 @@ import { FormsModule } from '@angular/forms';
 import { loaderReducer } from './state/loader.reducer';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { SvgWinjet1Component } from './features/widjets/svg-winjet1/svg-winjet1.component';
+import { Component4Component } from './temp/componets/component4/component4.component';
+import { NgChartsModule } from 'ng2-charts';
+import { LinearChartComponent } from './features/charting/linear-chart/linear-chart.component';
+
 
 
 @NgModule({
@@ -47,13 +51,16 @@ import { SvgWinjet1Component } from './features/widjets/svg-winjet1/svg-winjet1.
     HomeComponent,
     ErrorComponent,
     SvgWinjet1Component,
+    Component4Component,
+    LinearChartComponent,
 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-
+    NgChartsModule,
+    
     StoreModule.forRoot({ 
       books: booksReducer, 
       collection: collectionReducer, 

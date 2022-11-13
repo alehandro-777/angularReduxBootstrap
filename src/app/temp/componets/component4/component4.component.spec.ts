@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SvgWinjet1Component } from './svg-winjet1.component';
+import { Component4Component } from './component4.component';
 
-describe('SvgWinjet1Component', () => {
-  let component: SvgWinjet1Component;
-  let fixture: ComponentFixture<SvgWinjet1Component>;
+describe('Component4Component', () => {
+  let component: Component4Component;
+  let fixture: ComponentFixture<Component4Component>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SvgWinjet1Component ]
+      declarations: [ Component4Component ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SvgWinjet1Component);
+    fixture = TestBed.createComponent(Component4Component);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
