@@ -31,8 +31,10 @@ import { loaderReducer } from './state/loader.reducer';
 import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { SvgWinjet1Component } from './features/widjets/svg-winjet1/svg-winjet1.component';
 import { Component4Component } from './temp/componets/component4/component4.component';
-import { NgChartsModule } from 'ng2-charts';
+import { NgChartsModule, NgChartsConfiguration } from 'ng2-charts';
 import { LinearChartComponent } from './features/charting/linear-chart/linear-chart.component';
+import { BarCart1Component } from './features/charting/bar-cart1/bar-cart1.component';
+import { BarChartComponent } from './features/charting/bar-chart/bar-chart.component';
 
 
 
@@ -53,6 +55,8 @@ import { LinearChartComponent } from './features/charting/linear-chart/linear-ch
     SvgWinjet1Component,
     Component4Component,
     LinearChartComponent,
+    BarCart1Component,
+    BarChartComponent,
 
   ],
   imports: [
@@ -81,7 +85,8 @@ import { LinearChartComponent } from './features/charting/linear-chart/linear-ch
     StoreRouterConnectingModule.forRoot(),
     FormsModule
   ],
-  providers: [     
+  providers: [  
+    { provide: NgChartsConfiguration, useValue: { generateColors: true }},   
     {
       provide: HTTP_INTERCEPTORS,
       useClass: LoaderInterceptor,

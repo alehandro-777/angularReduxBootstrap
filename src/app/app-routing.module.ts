@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { BarChartComponent } from './features/charting/bar-chart/bar-chart.component';
 import { ErrorComponent } from './features/error/error.component';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
@@ -15,6 +16,8 @@ const routes: Routes = [
   { path: 'component3', component: Component3Component },
   { path: 'component4', component: Component4Component },
   
+  { path: 'bar', component: BarChartComponent },
+
   { path: 'login', component: LoginComponent },
   { path: '', component: HomeComponent },
   { path: '**', component: ErrorComponent },
