@@ -1,34 +1,40 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { selectUser } from '../state/user.selectors';
+import { User } from '../features/login/user.model';
+import { navigateTo } from '../state/navigation.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-/*
-        const user = this.authenticationService.userValue;
-        if (user) {
-            // check if route is restricted by role
-            if (route.data.roles && route.data.roles.indexOf(user.role) === -1) {
-                // role not authorised so redirect to home page
-                this.router.navigate(['/']);
-                return false;
-            }
+  user$ = this.store.select(selectUser);
+  
+  currentUser: User = {_id:0, name:"Guest"};
 
-            // authorised so return true
-            return true;
-        }
+  constructor( private store: Store) {
+    this.user$.subscribe(user => {
+      this.currentUser = user;
+    });
+  }
 
-        // not logged in so redirect to login page with the return url
-        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-*/
+  canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    
+    
+    if (this.currentUser._id > 0) {
 
-    return true;
+      //TODO TODO TODO route access checks
+
+      return true;
+
+    } else {
+      
+      this.store.dispatch(navigateTo( {url: "/login", params:{ queryParams: { return: state.url } }  } ));
+      return false;
+    }
   }
   
 }

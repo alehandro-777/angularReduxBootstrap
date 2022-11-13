@@ -4,6 +4,7 @@ import { BarChartComponent } from './features/charting/bar-chart/bar-chart.compo
 import { ErrorComponent } from './features/error/error.component';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
+import { AuthGuard } from './guards/auth.guard';
 import { Component1Component } from './temp/componets/component1/component1.component';
 import { Component2Component } from './temp/componets/component2/component2.component';
 import { Component3Component } from './temp/componets/component3/component3.component';
@@ -11,10 +12,10 @@ import { Component4Component } from './temp/componets/component4/component4.comp
 
 
 const routes: Routes = [
-  { path: 'component1', component: Component1Component },
-  { path: 'component2', component: Component2Component },
-  { path: 'component3', component: Component3Component },
-  { path: 'component4', component: Component4Component },
+  { path: 'component1', component: Component1Component, canActivate: [AuthGuard], },
+  { path: 'component2', component: Component2Component, canActivate: [AuthGuard], },
+  { path: 'component3', component: Component3Component, canActivate: [AuthGuard], },
+  { path: 'component4', component: Component4Component, canActivate: [AuthGuard], },
   
   { path: 'bar', component: BarChartComponent },
 
