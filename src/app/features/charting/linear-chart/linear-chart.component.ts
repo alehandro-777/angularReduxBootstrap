@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ChartOptions } from 'chart.js';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
+import DatalabelsPlugin from 'chartjs-plugin-datalabels';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
   selector: 'app-linear-chart',
@@ -7,27 +9,62 @@ import { ChartOptions } from 'chart.js';
   styleUrls: ['./linear-chart.component.scss']
 })
 export class LinearChartComponent implements OnInit {
+  
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+  
   title = 'ng2-charts-demo';
 
   // Pie
-  pieChartOptions: ChartOptions<'pie'> = {
-    responsive: false,
+  public pieChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+        align:"start"
+      },
+      datalabels: {
+        formatter: (value, ctx) => {
+          if (ctx.chart.data.labels) {
+            //return ctx.chart.data.labels[ctx.dataIndex];  //return label 
+            return value;
+          }
+          return ''
+        }, 
+      },
+      subtitle:{
+        text:'subtitle'
+      },
+      title: {
+        text:'title'
+      }
+    }
   };
   
-  pieChartLabels = [ [ 'Download', 'Sales' ], [ 'In', 'Store', 'Sales' ], 'Mail Sales' ];
-  pieChartDatasets = [ {
-    data: [ 300, 500, 100 ]
-  } ];
+  pieChartData: ChartData<'pie', number[], string | string[]> = {
+    labels: [ 'aaaaaaaaaaaaa', 'bbbbbbbbbbbb', 'ccccccccccc' ],
+    datasets: [ {
+      data: [ 300, 500, 100 ]
+    } ]
+  };
 
-  pieChartLegend = true;
-  pieChartPlugins = [];
+  public pieChartType: ChartType = 'pie';
+
+  public pieChartPlugins = [ DatalabelsPlugin ];
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  // events
+  public chartClicked({ event, active }: { event: ChartEvent, active: {}[] }): void {
+    console.log(event, active);
+  }
 
+  public chartHovered({ event, active }: { event: ChartEvent, active: {}[] }): void {
+    console.log(event, active);
+  }
 
   
 }

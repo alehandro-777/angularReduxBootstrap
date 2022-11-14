@@ -35,6 +35,7 @@ import { NgChartsModule, NgChartsConfiguration } from 'ng2-charts';
 import { LinearChartComponent } from './features/charting/linear-chart/linear-chart.component';
 import { BarCart1Component } from './features/charting/bar-cart1/bar-cart1.component';
 import { BarChartComponent } from './features/charting/bar-chart/bar-chart.component';
+import { ProgressBarComponent } from './features/widjets/progress-bar/progress-bar.component';
 
 
 
@@ -57,6 +58,7 @@ import { BarChartComponent } from './features/charting/bar-chart/bar-chart.compo
     LinearChartComponent,
     BarCart1Component,
     BarChartComponent,
+    ProgressBarComponent,
 
   ],
   imports: [
