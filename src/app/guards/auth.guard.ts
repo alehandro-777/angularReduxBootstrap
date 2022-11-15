@@ -23,7 +23,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-    
+    /*
     if (this.currentUser._id > 0) {
 
       //TODO TODO TODO route access checks
@@ -35,6 +35,8 @@ export class AuthGuard implements CanActivate {
       this.store.dispatch(navigateTo( {url: "/login", params:{ queryParams: { return: state.url } }  } ));
       return false;
     }
+    */
+    return true;
   }
   
 }
