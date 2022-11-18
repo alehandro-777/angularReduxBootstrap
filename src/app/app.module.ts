@@ -36,6 +36,7 @@ import { LinearChartComponent } from './features/charting/linear-chart/linear-ch
 import { BarCart1Component } from './features/charting/bar-cart1/bar-cart1.component';
 import { BarChartComponent } from './features/charting/bar-chart/bar-chart.component';
 import { ProgressBarComponent } from './features/widjets/progress-bar/progress-bar.component';
+import { DatepickerComponent } from './features/datepicker/datepicker.component';
 
 
 
@@ -59,6 +60,7 @@ import { ProgressBarComponent } from './features/widjets/progress-bar/progress-b
     BarCart1Component,
     BarChartComponent,
     ProgressBarComponent,
+    DatepickerComponent,
 
   ],
   imports: [
