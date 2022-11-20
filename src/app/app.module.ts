@@ -37,6 +37,7 @@ import { BarCart1Component } from './features/charting/bar-cart1/bar-cart1.compo
 import { BarChartComponent } from './features/charting/bar-chart/bar-chart.component';
 import { ProgressBarComponent } from './features/widjets/progress-bar/progress-bar.component';
 import { DatepickerComponent } from './features/datepicker/datepicker.component';
+import { calendarReducer } from './state/calendar.reducer';
 
 
 
@@ -75,7 +76,8 @@ import { DatepickerComponent } from './features/datepicker/datepicker.component'
       router: routerReducer, 
       user: userReducer,
       loading: loaderReducer,
-      
+      currentDate:calendarReducer,
+
     }, {}),
 
     EffectsModule.forRoot([

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDateStruct, NgbModal, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { tap, map } from 'rxjs';
 
@@ -7,23 +7,34 @@ import { navigateTo } from './state/navigation.actions';
 import * as userActions from './state/user.actions';
 import * as routerSelectors from './state/router.selectors';
 import * as loaderSelectors from './state/loader.selector';
+import * as calendarSelectors from './state/calendar.selectors';
+import * as calendarActions from './state/calendar.actions';
 
 import { TreeMenuNode } from './features/side-menu-tree/tree-menu-node.model';
 import { selectUser } from './state/user.selectors';
 import { NavigationExtras } from '@angular/router';
 
+import { CustomDatepickerI18n, I18n,  } from './datepicker-i18n.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }], // define custom NgbDatepickerI18n provider
+
 })
 export class AppComponent {
 
 sideMenu: TreeMenuNode[];
 selectedNode: TreeMenuNode;
-  
-  constructor(private modalService: NgbModal, private store: Store) { 
+
+selectedDay: NgbDateStruct = {
+  year:2022,
+  month:11,
+  day:20
+};  
+
+  constructor(private modalService: NgbModal, private store: Store, private calendar: NgbCalendar) { 
     this.sideMenu = [
       {
         name: "Node1",
@@ -72,7 +83,8 @@ selectedNode: TreeMenuNode;
  
   user$ = this.store.select(selectUser);
   loader$ = this.store.select(loaderSelectors.selectLoader);
-  
+  selectedDate$ = this.store.select(calendarSelectors.selectCalendarDateStruc);
+
   //test test
   fragment$ = this.store.select(routerSelectors.selectFragment).pipe(tap(f=>console.log("fragment", f)));
   currentRoute$ = this.store.select(routerSelectors.selectCurrentRoute).pipe(tap(f=>console.log("currentroute",f)), map(x=> JSON.stringify(x)));
@@ -86,7 +98,7 @@ selectedNode: TreeMenuNode;
   }
   
   ngOnInit() {
-
+    this.selectedDay = this.calendar.getToday();
   }
 
   sideMenuLeafClick(node:TreeMenuNode) {
@@ -114,5 +126,10 @@ selectedNode: TreeMenuNode;
     this.store.dispatch(navigateTo( {url: ""} ));
     this.store.dispatch(userActions.logOut());
   }
+  
+	clickSelectDay(date: NgbDate): void {
+		//console.log("Date selection changed ", date)
+    this.store.dispatch(calendarActions.newDay({ date }));
+	}
 
 }
