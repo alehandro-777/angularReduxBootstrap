@@ -36,8 +36,11 @@ import { LinearChartComponent } from './features/charting/linear-chart/linear-ch
 import { BarCart1Component } from './features/charting/bar-cart1/bar-cart1.component';
 import { BarChartComponent } from './features/charting/bar-chart/bar-chart.component';
 import { ProgressBarComponent } from './features/widjets/progress-bar/progress-bar.component';
-import { DatepickerComponent } from './features/datepicker/datepicker.component';
 import { calendarReducer } from './state/calendar.reducer';
+import { GasStorageMapComponent } from './features/dashboards/gas-storage-map/gas-storage-map.component';
+import { opdataReducer } from './state/opdata.reducers';
+import { OpdataEffects } from './effects/opdata.effects';
+import { PsgSvgWidjetComponent } from './features/widjets/psg-svg-widjet/psg-svg-widjet.component';
 
 
 
@@ -61,7 +64,8 @@ import { calendarReducer } from './state/calendar.reducer';
     BarCart1Component,
     BarChartComponent,
     ProgressBarComponent,
-    DatepickerComponent,
+    GasStorageMapComponent,
+    PsgSvgWidjetComponent,
 
   ],
   imports: [
@@ -76,7 +80,8 @@ import { calendarReducer } from './state/calendar.reducer';
       router: routerReducer, 
       user: userReducer,
       loading: loaderReducer,
-      currentDate:calendarReducer,
+      currentDate: calendarReducer,
+      opdata: opdataReducer,
 
     }, {}),
 
@@ -84,6 +89,8 @@ import { calendarReducer } from './state/calendar.reducer';
       BookEffects,
       UserEffects,
       NavigateEffects,
+      OpdataEffects,
+      
     ]),
     
     HttpClientModule,

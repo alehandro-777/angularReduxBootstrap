@@ -5,6 +5,13 @@
     <text [attr.x]="x" [attr.y]="y" dx="5" dy="15" fill="black">{{value}}</text>
     <text [attr.x]="x" [attr.y]="y" dx="25" dy="27" [attr.fill]="fillDelta" font-size=".7em">{{delta}}</text>
     <rect [attr.x]="x" [attr.y]="y" [attr.width]="w" [attr.height]="h" stroke="grey" stroke-width="1" fill="none" />
-    <text [attr.x]="x" [attr.y]="y" dx="65" dy="20" font-size=".7em"  fill="black">{{eu}}</text>
+    <text [attr.x]="x+w" [attr.y]="y" dx="-40" dy="20" font-size=".7em"  fill="black">{{eu}}</text>
+
+    <rect [attr.x]="x" [attr.y]="y+h" [attr.width]="w" height="10" stroke="grey" stroke-width="1" fill="SeaShell" />
+    <rect [attr.x]="x" [attr.y]="y+h" [attr.width]="scaledValue" height="10" [attr.fill]="progressColor"/>
+
+    <text [attr.x]="x+w/2" [attr.y]="y+h" dx="-10" dy="8" fill="black" font-size=".6em">{{percentValue}} %</text> 
+
+
   </g>
 </svg>

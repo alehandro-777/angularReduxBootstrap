@@ -1,19 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { timer } from 'rxjs';
+import { Component, Input, OnChanges, OnInit, SimpleChanges  } from '@angular/core';
+import { Value } from '../../dashboards/gas-storage-map/gas-storage-map.models';
 
 @Component({
   selector: '[app-progress-bar]',
   templateUrl: './progress-bar.component.svg',
   styleUrls: ['./progress-bar.component.scss']
 })
-export class ProgressBarComponent implements OnInit {
-
+export class ProgressBarComponent implements OnInit, OnChanges {
+  @Input() key = "";
+  @Input() data : Map<string, Value[]> =  new Map<string, Value[]>();
+  
   @Input() value = 0;
   @Input() min = 0;
   @Input() max = 100;
   @Input() x = 0;
   @Input() y = 0;
-  @Input() w = 500;
+  @Input() w = 100;
   @Input() h = 20;
   @Input() fillColor = 'rgb(125, 255, 128)';
 
@@ -27,15 +29,26 @@ export class ProgressBarComponent implements OnInit {
 
   }
 
-  //emit 0 after 1 second then complete, since no second argument is supplied
-  source = timer(1000, 2000);
-  //simulate expertan data
-  subscribe = this.source.subscribe(val => this.onClick() );
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes["data"] && this.data ) {
+      let values = this.data.get(`${this.key}`)
+
+      if (values && values.length > 0) {
+        this.value = values[0].value;
+        
+      }
+      else {
+        this.value = 0;
+ 
+      }
+      //render progress
+      this.linearRightXScaling();
+    }
+  }
+
 
   onClick():void {
 
-    this.value = Math.floor(Math.random() * 100);
-    this.linearRightXScaling();
   }
 
   //x- zero scale, x + width -full scale

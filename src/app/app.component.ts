@@ -7,7 +7,7 @@ import { navigateTo } from './state/navigation.actions';
 import * as userActions from './state/user.actions';
 import * as routerSelectors from './state/router.selectors';
 import * as loaderSelectors from './state/loader.selector';
-import * as calendarSelectors from './state/calendar.selectors';
+
 import * as calendarActions from './state/calendar.actions';
 
 import { TreeMenuNode } from './features/side-menu-tree/tree-menu-node.model';
@@ -83,7 +83,7 @@ selectedDay: NgbDateStruct = {
  
   user$ = this.store.select(selectUser);
   loader$ = this.store.select(loaderSelectors.selectLoader);
-  selectedDate$ = this.store.select(calendarSelectors.selectCalendarDateStruc);
+
 
   //test test
   fragment$ = this.store.select(routerSelectors.selectFragment).pipe(tap(f=>console.log("fragment", f)));
@@ -98,7 +98,9 @@ selectedDay: NgbDateStruct = {
   }
   
   ngOnInit() {
-    this.selectedDay = this.calendar.getToday();
+    let date = this.calendar.getToday();
+    this.selectedDay = date;
+    this.store.dispatch(calendarActions.newDay({ date }));
   }
 
   sideMenuLeafClick(node:TreeMenuNode) {
