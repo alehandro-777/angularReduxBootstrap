@@ -41,6 +41,9 @@ import { GasStorageMapComponent } from './features/dashboards/gas-storage-map/ga
 import { opdataReducer } from './state/opdata.reducers';
 import { OpdataEffects } from './effects/opdata.effects';
 import { PsgSvgWidjetComponent } from './features/widjets/psg-svg-widjet/psg-svg-widjet.component';
+import { SmallTableComponent } from './features/widjets/small-table/small-table.component';
+import { TableCellComponent } from './features/widjets/small-table/table-cell/table-cell.component';
+import { TableSubCellComponent } from './features/widjets/small-table/table-sub-cell/table-sub-cell.component';
 
 
 
@@ -66,6 +69,9 @@ import { PsgSvgWidjetComponent } from './features/widjets/psg-svg-widjet/psg-svg
     ProgressBarComponent,
     GasStorageMapComponent,
     PsgSvgWidjetComponent,
+    SmallTableComponent,
+    TableCellComponent,
+    TableSubCellComponent,
 
   ],
   imports: [

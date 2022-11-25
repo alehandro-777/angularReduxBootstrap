@@ -21,6 +21,10 @@ export class PsgSvgWidjetComponent implements OnInit, OnChanges {
   @Input() progressColor = 'rgb(125, 255, 128)';
 
   @Input() eu = "тис.м3";
+
+  @Input() fixed = 3;  
+  @Input() k = 0.001;
+
   value = "---";
   delta = "---";
   fillDelta = "green";
@@ -31,14 +35,20 @@ export class PsgSvgWidjetComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes["data"] && this.data ) {
       let values = this.data.get(`${this.key}`)
-
       if (values && values.length > 1) {
-        this.value = values[0].value.toFixed(3);
-        let delta = values[0].value - values[1].value;
-        this.fillDelta = delta < 0 ? "red" : "green";
-        this.delta = delta < 0 ? delta.toFixed(3) : "+"+ delta.toFixed(3);
-        this.scaledValue = this.linearRightXScaling(values[0].value);
-        this.percentValue = Math.floor( values[0].value*100 / this.max);      
+
+        let currVal = values[0].value *this.k;
+        let prevVal = values[1].value *this.k;
+
+        this.value = currVal.toLocaleString("fr-CA", {minimumFractionDigits: this.fixed});
+        let dv = currVal - prevVal;
+        this.fillDelta = dv < 0 ? "red" : "green";
+        let sdv = dv.toLocaleString("fr-CA", {minimumFractionDigits: this.fixed});
+        this.delta = dv < 0 ? sdv : "+"+sdv;
+
+        this.scaledValue = this.linearRightXScaling(currVal);
+        this.percentValue = Math.floor( currVal*100 / this.max);
+
       }
       else {
         this.value = "---";
