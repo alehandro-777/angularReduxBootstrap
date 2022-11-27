@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Value } from 'src/app/features/dashboards/gas-storage-map/gas-storage-map.models';
 
 @Component({
@@ -6,7 +6,7 @@ import { Value } from 'src/app/features/dashboards/gas-storage-map/gas-storage-m
   templateUrl: './table-cell.component.html',
   styleUrls: ['./table-cell.component.scss']
 })
-export class TableCellComponent implements OnInit {
+export class TableCellComponent implements OnInit, OnChanges {
   @Input() key = "";
   @Input() data : Map<string, Value[]> =  new Map<string, Value[]>();
   @Input() offset = 0;

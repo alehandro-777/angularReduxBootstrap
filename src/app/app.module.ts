@@ -44,6 +44,10 @@ import { PsgSvgWidjetComponent } from './features/widjets/psg-svg-widjet/psg-svg
 import { SmallTableComponent } from './features/widjets/small-table/small-table.component';
 import { TableCellComponent } from './features/widjets/small-table/table-cell/table-cell.component';
 import { TableSubCellComponent } from './features/widjets/small-table/table-sub-cell/table-sub-cell.component';
+import { TemperatureMapComponent } from './features/dashboards/temperature-map/temperature-map.component';
+import { wheaterForecastReducer } from './state/temperatures.reducer';
+import { WheaterEffects } from './effects/weather.effects';
+import { WeatherCityComponent } from './features/widjets/weather-city/weather-city.component';
 
 
 
@@ -72,6 +76,8 @@ import { TableSubCellComponent } from './features/widjets/small-table/table-sub-
     SmallTableComponent,
     TableCellComponent,
     TableSubCellComponent,
+    TemperatureMapComponent,
+    WeatherCityComponent,
 
   ],
   imports: [
@@ -88,6 +94,7 @@ import { TableSubCellComponent } from './features/widjets/small-table/table-sub-
       loading: loaderReducer,
       currentDate: calendarReducer,
       opdata: opdataReducer,
+      wheater: wheaterForecastReducer,
 
     }, {}),
 
@@ -96,6 +103,7 @@ import { TableSubCellComponent } from './features/widjets/small-table/table-sub-
       UserEffects,
       NavigateEffects,
       OpdataEffects,
+      WheaterEffects,
       
     ]),
     

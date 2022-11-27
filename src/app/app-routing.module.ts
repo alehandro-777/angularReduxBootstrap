@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BarChartComponent } from './features/charting/bar-chart/bar-chart.component';
 import { GasStorageMapComponent } from './features/dashboards/gas-storage-map/gas-storage-map.component';
+import { TemperatureMapComponent } from './features/dashboards/temperature-map/temperature-map.component';
 import { ErrorComponent } from './features/error/error.component';
 import { HomeComponent } from './features/home/home.component';
 import { LoginComponent } from './features/login/login.component';
@@ -13,6 +14,7 @@ import { Component4Component } from './temp/componets/component4/component4.comp
 
 
 const routes: Routes = [
+  { path: 'dashboards/wheathermap', component: TemperatureMapComponent, canActivate: [AuthGuard], },
   { path: 'dashboards/storagemap', component: GasStorageMapComponent, canActivate: [AuthGuard], },
   { path: 'component1', component: Component1Component, canActivate: [AuthGuard], },
   { path: 'component2', component: Component2Component, canActivate: [AuthGuard], },
