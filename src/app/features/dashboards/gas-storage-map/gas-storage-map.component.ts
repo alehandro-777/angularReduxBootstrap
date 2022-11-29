@@ -29,7 +29,6 @@ export class GasStorageMapComponent implements OnInit, OnDestroy {
 
   sub2 = this.currDay$.subscribe(d=> {
     this.store.dispatch(opDataActions.loadOpdata({ url:"/charts" }));
-
     this.D1 = `${d.day}.${d.month}.${d.year}`;
     let next = this.calendar.getNext(d);
     let prev = this.calendar.getPrev(d);

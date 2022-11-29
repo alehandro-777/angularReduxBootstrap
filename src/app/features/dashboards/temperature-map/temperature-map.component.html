@@ -2649,7 +2649,9 @@
         <image href="/assets/psg-logo.png" x="600" y="0" height="40"  />
        
         <g app-weather-city [x]="200" [y]="200" [key]="'1'" [data]="dataMap">Вінницька</g>
+        <g app-weather-city [x]="260" [y]="110" [key]="'9'" [data]="dataMap">Київська</g>
 
+        <g app-weather-city [x]="500" [y]="50" [key]="'25'" [data]="dataMap">Украіна</g>
     </svg>    
 
 
@@ -2658,7 +2660,7 @@
 
 <div class="flex-item">
     <div style="display: block;">
-        <canvas baseChart width="1000" height="100"
+        <canvas baseChart width="1000" height="200"
                     [data]="lineChartData"
                     [options]="lineChartOptions"
                     [type]="lineChartType">
