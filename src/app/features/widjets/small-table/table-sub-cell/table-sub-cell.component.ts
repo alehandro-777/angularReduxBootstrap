@@ -14,7 +14,8 @@ import { Value } from 'src/app/features/dashboards/gas-storage-map/gas-storage-m
     @Input() offset = 0;
     @Input() fixed = 3;  
     @Input() k = 1;  
-  
+    @Input() dt = "";
+    
     value = "---";
   
     constructor() { }
@@ -27,15 +28,38 @@ import { Value } from 'src/app/features/dashboards/gas-storage-map/gas-storage-m
         let values1 = this.data.get(`${this.key1}`);
         let values2 = this.data.get(`${this.key2}`);
 
-        if (values1 && values1.length > this.offset && values2 && values2.length > this.offset) {
-          let result = this.k * (values1[this.offset].value - values2[this.offset].value);
-          this.value = result.toLocaleString("fr-CA", {minimumFractionDigits: this.fixed}); //     
+        if (values1 && values1.length > 0 && values2 && values2.length > 0) {
+          let times = this.selectPrevNextTimeStampes(this.dt);
+
+          let a = values1.find(v=> v.time_stamp.toString() == times[this.offset+1]);
+          let b = values2.find(v=> v.time_stamp.toString() == times[this.offset+1]);
+          
+          if (a && b ) {
+            let result = this.k * (a.value - b.value);
+            this.value = result.toLocaleString("fr-CA", {minimumFractionDigits: this.fixed}); // 
+          } else {
+            this.value = "---"; 
+          }
+    
         }
         else {
           this.value = "---"; 
         }
       }
     }
+    selectPrevNextTimeStampes(dtIso:string) :string[] {
+
+      //console.log(dtIso);
+      let d1 = new Date(dtIso);
+      d1.setHours(7);
+      let d0 = new Date(dtIso);
+      d0.setHours(7);
+      d0.setTime(d0.getTime() - 1 * 24 * 3600 * 1000);
+      let d2 = new Date(dtIso);
+      d2.setHours(7);
+      d2.setTime(d2.getTime() + 1 * 24 * 3600 * 1000);
   
+      return [d0.toISOString(), d1.toISOString(), d2.toISOString()];
+    }
   }
   

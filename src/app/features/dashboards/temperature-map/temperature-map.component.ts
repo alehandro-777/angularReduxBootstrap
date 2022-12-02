@@ -18,11 +18,10 @@ export class TemperatureMapComponent implements OnInit, OnDestroy {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   
   dataMap$ = this.store.select(weatherSelectors.selectWheatherMap);
-  currDay$ = this.store.select(calendarSelectors.selectCalendarDate);
+  currDay$ = this.store.select(calendarSelectors.selectCalendarDateIso);
 
-  D0:string="";
-  D1:string="";
-  D2:string="";
+  dateTimeIso:string="";
+
   //order from west to east
   cityOrder = [6,12,8,2,18,23,16,21,1,5,9,14,24,13,22,10,20,15,17,3,7,19,4,11];
 
@@ -31,7 +30,7 @@ export class TemperatureMapComponent implements OnInit, OnDestroy {
     datasets: [
       {
         data: [],
-        label: 'Середня температура',
+        label: 'Середня температура наступний тиждень',
         backgroundColor: 'rgba(148,159,177,0.2)',
         borderColor: 'rgba(148,159,177,1)',
 
@@ -39,9 +38,10 @@ export class TemperatureMapComponent implements OnInit, OnDestroy {
       }
     // ... add dataset here
     ],
-      labels: ["Закарпатська","Львівська","Івано-Франківська","Волинська","Тернопільська","Чернівецька","Рівненська",
-      "Хмельницька","Вінницька","Житомирська","Київська","Одеська","Чернігівська","Миколаївська","Черкаська","Херсонська",
-      "Полтавська","Сумська","Дніпропетровська","Запорізька","Харківська","Донецька","Луганська"]
+      //labels: ["Закарпатська","Львівська","Івано-Франківська","Волинська","Тернопільська","Чернівецька","Рівненська",
+      //"Хмельницька","Вінницька","Житомирська","Київська","Одеська","Чернігівська","Миколаївська","Черкаська","Херсонська",
+      //"Полтавська","Сумська","Дніпропетровська","Запорізька","Харківська","Донецька","Луганська"]
+
     };
 
     lineChartOptions: ChartConfiguration['options'] = {
@@ -58,18 +58,18 @@ export class TemperatureMapComponent implements OnInit, OnDestroy {
 
   sub1 = this.dataMap$.subscribe(map=> {
     this.dataMap = map;
-    this.lineChartData.datasets[0].data = this.decode(this.cityOrder, map);
+    let d = this.selectLineData(25,3, map);
+    let v = d.map(v=> v.value);
+    let l = d.map(v=> new Date(v.time_stamp).toLocaleDateString());
+    this.lineChartData.datasets[0].data = v;
+    this.lineChartData.labels =l;
     this.chart?.update();
   });
 
   sub2 = this.currDay$.subscribe(d=> {
     this.store.dispatch(weatherActions.loadApidata());
-
-    this.D1 = `${d.day}.${d.month}.${d.year}`;
-    let next = this.calendar.getNext(d);
-    let prev = this.calendar.getPrev(d);
-    this.D0 = `${prev.day}.${prev.month}.${prev.year}`;
-    this.D2 = `${next.day}.${next.month}.${next.year}`;
+    this.dateTimeIso = d;
+ 
   });
 
   constructor(private store: Store, private calendar: NgbCalendar) { }
@@ -92,6 +92,13 @@ export class TemperatureMapComponent implements OnInit, OnDestroy {
       }
     });
     return res;
+  }
+
+  selectLineData(location_id: number, param:number, map : Map<string, Value[]>) : Value[] {
+    let res: Value[] = [];
+    let v = map.get(`${location_id}`);
+    if (!v) return res;
+    return v.filter(v=> v.parameter == param);
   }
 
 }

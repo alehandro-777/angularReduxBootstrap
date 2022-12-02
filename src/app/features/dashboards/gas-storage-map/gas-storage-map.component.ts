@@ -20,6 +20,7 @@ export class GasStorageMapComponent implements OnInit, OnDestroy {
   D0:string="";
   D1:string="";
   D2:string="";
+  iso:string="";
 
   dataMap : Map<string, Value[]> =  new Map<string, Value[]>();
 
@@ -29,10 +30,14 @@ export class GasStorageMapComponent implements OnInit, OnDestroy {
 
   sub2 = this.currDay$.subscribe(d=> {
     this.store.dispatch(opDataActions.loadOpdata({ url:"/charts" }));
-    this.D1 = `${d.day}.${d.month}.${d.year}`;
+
+    this.iso = new Date(d.year, d.month-1, d.day).toISOString();
+
     let next = this.calendar.getNext(d);
     let prev = this.calendar.getPrev(d);
+
     this.D0 = `${prev.day}.${prev.month}.${prev.year}`;
+    this.D1 = `${d.day}.${d.month}.${d.year}`;
     this.D2 = `${next.day}.${next.month}.${next.year}`;
   });
 

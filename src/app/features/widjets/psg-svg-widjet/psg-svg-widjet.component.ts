@@ -25,10 +25,14 @@ export class PsgSvgWidjetComponent implements OnInit, OnChanges {
   @Input() fixed = 3;  
   @Input() k = 0.001;
 
+  @Input() long = 0;
+  @Input() dt = "";
+  
   value = "---";
   delta = "---";
   fillDelta = "green";
   scaledValue = 0;
+  scaledValue1 = 0;
   percentValue =0;
   constructor() { }
 
@@ -36,29 +40,55 @@ export class PsgSvgWidjetComponent implements OnInit, OnChanges {
     if (changes["data"] && this.data ) {
       let values = this.data.get(`${this.key}`)
       if (values && values.length > 1) {
+        
+        let times = this.selectPrevNextTimeStampes(this.dt);
 
-        let currVal = values[0].value *this.k;
-        let prevVal = values[1].value *this.k;
+        let curr = values.find(v=> v.time_stamp.toString() == times[1]);
+        let prev = values.find(v=> v.time_stamp.toString() == times[0]);
 
-        this.value = currVal.toLocaleString("fr-CA", {minimumFractionDigits: this.fixed});
-        let dv = currVal - prevVal;
-        this.fillDelta = dv < 0 ? "red" : "green";
-        let sdv = dv.toLocaleString("fr-CA", {minimumFractionDigits: this.fixed});
-        this.delta = dv < 0 ? sdv : "+"+sdv;
+        if (curr && prev) {
+          let currVal = curr.value *this.k;
+          let prevVal = prev.value *this.k;
+  
+          this.value = currVal.toLocaleString("fr-CA", {minimumFractionDigits: this.fixed});
+          let dv = currVal - prevVal;
+          this.fillDelta = dv < 0 ? "red" : "green";
+          let sdv = dv.toLocaleString("fr-CA", {minimumFractionDigits: this.fixed});
+          this.delta = dv < 0 ? sdv : "+"+sdv;
+  
+          this.scaledValue = this.linearRightXScaling(currVal);
+          this.percentValue = Math.floor( currVal*100 / this.max);
+          this.scaledValue1 = this.linearRightXScaling(this.long*this.k);
+        } else {
+          this.value = "---";
+          this.delta = "---";
+          this.scaledValue = 0; 
+          this.percentValue = 0;
+        }
 
-        this.scaledValue = this.linearRightXScaling(currVal);
-        this.percentValue = Math.floor( currVal*100 / this.max);
-
-      }
-      else {
+      }  else {
         this.value = "---";
         this.delta = "---";
         this.scaledValue = 0; 
-        this.percentValue = 0; 
+        this.percentValue = 0;
       }
     }
   }
 
+  selectPrevNextTimeStampes(dtIso:string) :string[] {
+
+    //console.log(dtIso);
+    let d1 = new Date(dtIso);
+    d1.setHours(7);
+    let d0 = new Date(dtIso);
+    d0.setHours(7);
+    d0.setTime(d0.getTime() - 1 * 24 * 3600 * 1000);
+    let d2 = new Date(dtIso);
+    d2.setHours(7);
+    d2.setTime(d2.getTime() + 1 * 24 * 3600 * 1000);
+
+    return [d0.toISOString(), d1.toISOString(), d2.toISOString()];
+  }
 
   ngOnInit(): void {
 

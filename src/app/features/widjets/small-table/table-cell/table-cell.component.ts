@@ -12,7 +12,8 @@ export class TableCellComponent implements OnInit, OnChanges {
   @Input() offset = 0;
   @Input() fixed = 3;  
   @Input() k = 1;  
-
+  @Input() dt = "";
+  
   value = "---";
 
   constructor() { }
@@ -24,9 +25,17 @@ export class TableCellComponent implements OnInit, OnChanges {
     if (changes["data"] && this.data ) {
       let values = this.data.get(`${this.key}`)
 
-      if (values && values.length > this.offset) {
-        let result = this.k * values[this.offset].value;
-        this.value = result.toLocaleString("fr-CA", {minimumFractionDigits: this.fixed}) //     
+      if (values && values.length > 0) {
+        let times = this.selectPrevNextTimeStampes(this.dt);
+
+        let curr = values.find(v=> v.time_stamp.toString() == times[this.offset+1]);
+        if(curr) {
+          let result = this.k * curr.value;
+          this.value = result.toLocaleString("fr-CA", {minimumFractionDigits: this.fixed}) //
+        } else {
+          this.value = "---"; 
+        }
+     
       }
       else {
         this.value = "---"; 
@@ -34,4 +43,18 @@ export class TableCellComponent implements OnInit, OnChanges {
     }
   }
 
+  selectPrevNextTimeStampes(dtIso:string) :string[] {
+
+    //console.log(dtIso);
+    let d1 = new Date(dtIso);
+    d1.setHours(7);
+    let d0 = new Date(dtIso);
+    d0.setHours(7);
+    d0.setTime(d0.getTime() - 1 * 24 * 3600 * 1000);
+    let d2 = new Date(dtIso);
+    d2.setHours(7);
+    d2.setTime(d2.getTime() + 1 * 24 * 3600 * 1000);
+
+    return [d0.toISOString(), d1.toISOString(), d2.toISOString()];
+  }
 }

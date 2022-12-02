@@ -15,6 +15,8 @@ export class WeatherCityComponent implements OnInit, OnChanges {
   @Input() w = 90;
   @Input() h = 30;  
   @Input() fillColor = 'rgb(255, 255, 255)';
+  @Input() dt = '';
+
   value = "---";
   delta = "---";
   fillDelta = "green";
@@ -24,7 +26,9 @@ export class WeatherCityComponent implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges) {
     if (changes["data"] && this.data ) {
-      let values = this.data.get(`${this.key}`)
+      let v = this.data.get(`${this.key}`)
+      if (!v) return;
+      let values = v.filter(v=> v.time_stamp.toString() == this.dt);
 
       if (values && values.length == 3) {
         let min = values[0].value > 0 ? "+" + values[0].value.toFixed(0): values[0].value.toFixed(0); 
