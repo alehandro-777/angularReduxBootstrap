@@ -27,10 +27,16 @@ export class WeatherCityComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes["data"] && this.data ) {
       let v = this.data.get(`${this.key}`)
-      if (!v) return;
+      if (!v) {
+        this.value = "---";
+        this.delta = "---"; 
+        return;
+      };
+      
       let values = v.filter(v=> v.time_stamp.toString() == this.dt);
-
       if (values && values.length == 3) {
+        values.sort((a,b)=> a.parameter - b.parameter);
+
         let min = values[0].value > 0 ? "+" + values[0].value.toFixed(0): values[0].value.toFixed(0); 
         let max = values[1].value > 0 ? "+" + values[1].value.toFixed(0): values[1].value.toFixed(0);
         let avg = values[2].value > 0 ? "+" + values[2].value.toFixed(0): values[2].value.toFixed(0);
