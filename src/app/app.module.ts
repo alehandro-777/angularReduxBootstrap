@@ -48,6 +48,8 @@ import { TemperatureMapComponent } from './features/dashboards/temperature-map/t
 import { wheaterForecastReducer } from './state/temperatures.reducer';
 import { WheaterEffects } from './effects/weather.effects';
 import { WeatherCityComponent } from './features/widjets/weather-city/weather-city.component';
+import { ForecastCityLineComponent } from './features/charting/forecast-city-line/forecast-city-line.component';
+import { TemperaturesChartsComponent } from './features/dashboards/temperatures-charts/temperatures-charts.component';
 
 
 
@@ -78,6 +80,8 @@ import { WeatherCityComponent } from './features/widjets/weather-city/weather-ci
     TableSubCellComponent,
     TemperatureMapComponent,
     WeatherCityComponent,
+    ForecastCityLineComponent,
+    TemperaturesChartsComponent,
 
   ],
   imports: [

@@ -2,6 +2,10 @@
   <div class="row flex-nowrap">
       <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
 
+        <div class="rounded-1 text-bg-light mb-1 mt-1">
+            <img src="/assets/Transparent_UKR_SSOU_Logo_Gorizontal.png" alt="OGSU logo" height="60">            
+        </div>
+
         <div class="text-bg-dark">
             <ngb-datepicker [(ngModel)]="selectedDay" (dateSelect)="clickSelectDay($event)"></ngb-datepicker>
         </div>
@@ -19,7 +23,7 @@
               <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                   <li class="nav-item">
                       <a routerLink="dashboards/storagemap" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link align-middle px-0">
-                          <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Карта</span>
+                          <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Обсяг газу ПСГ</span>
                       </a>
                   </li>
                   <li>
@@ -27,21 +31,30 @@
                           <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span> </a>
                       <ul class="collapse show nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
                           <li class="w-100">
-                              <a routerLink="/component2" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> <span class="d-none d-sm-inline">Карта</span> 1 </a>
+                              <a routerLink="/component2" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> 
+                                <span class="d-none d-sm-inline">Карта</span> 1 </a>
                           </li>
                           <li>
-                              <a routerLink="/component3" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> <span class="d-none d-sm-inline">Таблица</span> 2 </a>
+                              <a routerLink="/component3" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> 
+                                <span class="d-none d-sm-inline">Таблица</span> 2 </a>
                           </li>
                           <li>
-                            <a routerLink="/component4" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> <span class="d-none d-sm-inline">Диаграма ПСГ</span> 3 </a>
+                            <a routerLink="/component4" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> 
+                                <span class="d-none d-sm-inline">Обсяги діаграма</span> 3 </a>
                         </li>
                         <li>
-                            <a routerLink="/bar" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> <span class="d-none d-sm-inline">Bar</span> 4 </a>
+                            <a routerLink="/bar" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> 
+                                <span class="d-none d-sm-inline">Bar</span> 4 </a>
                         </li>
                         <li>
-                            <a routerLink="/dashboards/wheathermap" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> <span class="d-none d-sm-inline">Погода</span> 5 </a>
+                            <a routerLink="/dashboards/wheathermap" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> 
+                                <span class="d-none d-sm-inline">Погода</span> 5 </a>
                         </li>
-                      </ul>
+                        <li>
+                            <a routerLink="/dashboards/wheathercharts" routerLinkActive="active" ariaCurrentWhenActive="page" class="nav-link px-0"> 
+                                <span class="d-none d-sm-inline">Погода граф</span> 6 </a>
+                        </li>                      
+                    </ul>
                   </li>
                   <li>
                       <a href="#" class="nav-link px-0 align-middle">
@@ -87,32 +100,39 @@
               </ul>
 
 
-              <div class="dropdown pb-4">
-                  <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                      
-                    <img src="/assets/psg-logo.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
+            <div class="dropdown pt-4 pb-4">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    
+                    <img src="/assets/1.png" alt="hugenerd" width="30" height="30" class="rounded-circle">
 
-                      <span class="d-none d-sm-inline mx-1">{{ (user$ | async)?.name || "asshole"}}</span>
-                  </a>
+                    <span class="d-none d-sm-inline mx-1">{{ (user$ | async)?.name || "asshole"}}</span>
+                </a>
 
-                  <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                     <li>
                         <button type="button" class="dropdown-item btn btn-link" (click)="onNavigate('/login',{})">
                             <span class="d-none d-sm-inline">Sign in</span>                             
                         </button>
-                      </li>
-                      <li><a class="dropdown-item" href="#">Settings</a></li>
-                      <li><a class="dropdown-item" href="#">Profile</a></li>
-                      <li>
-                          <hr class="dropdown-divider">
-                      </li>
-                      <li>
+                    </li>
+                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li>
                         <button type="button" class="dropdown-item btn btn-link" (click)="singOut()">
                             <span class="d-none d-sm-inline">Sign out</span>                             
                         </button>
-                      </li>
-                  </ul>
+                    </li>
+                </ul>
+            </div>                
+
+
+
+              <div class="rounded-1 text-bg-light mb-1 mt-1">
+                <img src="/assets/utg-logo.png" alt="OGSU logo" height="60">            
               </div>
+
           </div>
       </div>
 

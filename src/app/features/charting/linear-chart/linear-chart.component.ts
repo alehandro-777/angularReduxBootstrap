@@ -18,12 +18,12 @@ export class LinearChartComponent implements OnInit, OnChanges {
   @Input() fixed = 3;  
   @Input() k = 0.000001;  
   @Input() dt = "";
-  @Input() long = 4662000;
   @Input() max = 30550000;
   @Input() title = 'ПСГ';
 
-  value = 0;
 
+  act_parameter = "52";
+  long_parameter = "352";
 
   // Pie
   public pieChartOptions: ChartConfiguration['options'] = {
@@ -96,28 +96,32 @@ export class LinearChartComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes["data"] && this.data ) {
-      let values = this.data.get(`${this.key}`)
+
+      let values = this.data.get(`${this.key}.${this.act_parameter}`);
+      let longs = this.data.get(`${this.key}.${this.long_parameter}`);
 
       if (values && values.length > 0) {
         let times = this.selectPrevNextTimeStampes(this.dt);
 
         let curr = values.find(v=> v.time_stamp.toString() == times[this.offset+1]);
+        let par352 = longs?.find(v=> v.time_stamp.toString() == times[this.offset+1]);
+
         if(curr) {
-          let act = this.k * curr.value;
-          let long = this.k * this.long;
-          let free = this.k * (this.max - curr.value - this.long);
+          let act = curr.value;
+          let long = par352 ? par352.value : 0;
+          let free = this.max - curr.value - long;
 
-          this.pieChartData.datasets[0].data = [act, long, free];
-
-          this.chart?.update();
+          this.pieChartData.datasets[0].data = [this.k *act, this.k *long, this.k *free];
+console.log(this.data)
         } else {
-          this.value = 0; 
+          this.pieChartData.datasets[0].data = [];
         }
      
       }
       else {
-        this.value = 0; 
+        this.pieChartData.datasets[0].data = []; 
       }
+      this.chart?.update();
     }
   }
 
