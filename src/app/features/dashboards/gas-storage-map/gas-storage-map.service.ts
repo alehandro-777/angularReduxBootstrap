@@ -14,5 +14,8 @@ export class GasStorageMapService {
     return this.http.get<OpDataPacket>(environment.apiBaseUrl + `${url}?gasday=${tsIso}`, { withCredentials: true });
   }
 
+  getRange(url:string, from: string, to:string): Observable<OpDataPacket> {
+    return this.http.get<OpDataPacket>(environment.apiBaseUrl + `${url}?from=${from}&to=${to}`, { withCredentials: true });
+  }
 
 }

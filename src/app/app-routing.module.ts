@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BarChartComponent } from './features/charting/bar-chart/bar-chart.component';
+import { ActGasChartsComponent } from './features/dashboards/act-gas-charts/act-gas-charts.component';
 import { GasStorageMapComponent } from './features/dashboards/gas-storage-map/gas-storage-map.component';
 import { TemperatureMapComponent } from './features/dashboards/temperature-map/temperature-map.component';
 import { TemperaturesChartsComponent } from './features/dashboards/temperatures-charts/temperatures-charts.component';
@@ -15,6 +16,7 @@ import { Component4Component } from './temp/componets/component4/component4.comp
 
 
 const routes: Routes = [
+  { path: 'dashboards/actgascharts', component: ActGasChartsComponent, canActivate: [AuthGuard], },
   { path: 'dashboards/wheathercharts', component: TemperaturesChartsComponent, canActivate: [AuthGuard], },
   { path: 'dashboards/wheathermap', component: TemperatureMapComponent, canActivate: [AuthGuard], },
   { path: 'dashboards/storagemap', component: GasStorageMapComponent, canActivate: [AuthGuard], },

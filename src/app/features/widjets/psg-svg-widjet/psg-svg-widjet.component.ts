@@ -20,7 +20,7 @@ export class PsgSvgWidjetComponent implements OnInit, OnChanges {
   @Input() fillColor = 'rgb(255, 255, 255)';
   @Input() progressColor = 'rgb(125, 255, 128)';
 
-  @Input() eu = "тис.м3";
+  @Input() eu = "млн.м3";
 
   @Input() fixed = 3;  
   @Input() k = 0.001;

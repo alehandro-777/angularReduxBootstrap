@@ -8,6 +8,7 @@ import * as userActions from './state/user.actions';
 import * as routerSelectors from './state/router.selectors';
 import * as loaderSelectors from './state/loader.selector';
 
+import * as rangeActions from './state/range.actions';
 import * as calendarActions from './state/calendar.actions';
 
 import { TreeMenuNode } from './features/side-menu-tree/tree-menu-node.model';
@@ -99,8 +100,14 @@ selectedDay: NgbDateStruct = {
   
   ngOnInit() {
     let date = this.calendar.getToday();
+    let rangeStart = this.calendar.getPrev(date, "d", 10);
     this.selectedDay = date;
     this.store.dispatch(calendarActions.newDay({ date }));
+    let range = {
+      from: rangeStart,
+      to: date
+    };
+    this.store.dispatch(rangeActions.newDatesRange({ range}));
   }
 
   sideMenuLeafClick(node:TreeMenuNode) {

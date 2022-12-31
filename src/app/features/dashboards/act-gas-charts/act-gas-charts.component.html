@@ -1,0 +1,25 @@
+<div class="mb-2">
+    <app-popup-range-selector [start]="(range$ | async)!" (changed)="onRangeChanged($event)"></app-popup-range-selector>    
+</div>
+
+
+<div class="d-flex justify-content-between flex-wrap  align-items-center border-bottom"> 
+
+<div class="card">
+    <app-op-data-line-chart [key]="'7000001.52'" [data]="dataMap" [title]="'Оператор ГСУ, всього'"></app-op-data-line-chart>
+</div>
+
+<div class="card">
+    <app-op-data-line-chart [key]="'906024.52'" [data]="dataMap" [title]="'ПСГ Більче-Волицько-Угерське'"></app-op-data-line-chart>
+</div>
+ 
+
+<div class="card">
+    <app-op-data-line-chart [key]="'906023.52'" [data]="dataMap" [title]="'ПСГ Угерське'"></app-op-data-line-chart>
+</div>
+
+<div class="card">
+    <app-op-data-line-chart [key]="'906022.52'" [data]="dataMap" [title]="'ПСГ Дашавське'"></app-op-data-line-chart>
+</div>
+
+</div>

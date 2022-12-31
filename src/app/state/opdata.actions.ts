@@ -6,6 +6,11 @@ export const loadOpdata = createAction(
   props<{ url:string }>()
 );
 
+export const loadOpdataRange = createAction(
+  '[Opdata] Load range',
+  props<{ url:string }>()
+);
+
 export const loadOpSuccess = createAction(
   '[Opdata] Load Sucess',
     props<{ payload:OpDataPacket }>()

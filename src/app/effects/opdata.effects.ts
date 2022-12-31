@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { GasStorageMapService } from '../features/dashboards/gas-storage-map/gas-storage-map.service';
 import { selectCalendarDateIso } from '../state/calendar.selectors';
 import { of } from 'rxjs';
+import { selectDatesRangeIso } from '../state/range.selectors';
 
 
 @Injectable()
@@ -23,7 +24,17 @@ export class OpdataEffects {
     )
   );  
   
+  loadRange$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(opDataActions.loadOpdataRange),
+      withLatestFrom(this.store.select(selectDatesRangeIso)),
+      mergeMap((md) => this.opDataService.getRange(md[0].url, `${md[1].from}`, `${md[1].to}`).pipe(
 
+            map( payload => (opDataActions.loadOpSuccess({ payload })) ),   //=>Success
+            catchError(  (error) => of(opDataActions.loadOpdataError(error)) ) //=> Error
+            )),        
+    )
+  );
 
 
   constructor(

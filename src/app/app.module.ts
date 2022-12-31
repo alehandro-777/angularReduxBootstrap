@@ -50,6 +50,10 @@ import { WheaterEffects } from './effects/weather.effects';
 import { WeatherCityComponent } from './features/widjets/weather-city/weather-city.component';
 import { ForecastCityLineComponent } from './features/charting/forecast-city-line/forecast-city-line.component';
 import { TemperaturesChartsComponent } from './features/dashboards/temperatures-charts/temperatures-charts.component';
+import { PopupRangeSelectorComponent } from './features/range/popup-range-selector/popup-range-selector.component';
+import { rangeReducer } from './state/range.reducers';
+import { ActGasChartsComponent } from './features/dashboards/act-gas-charts/act-gas-charts.component';
+import { OpDataLineChartComponent } from './features/charting/op-data-line-chart/op-data-line-chart.component';
 
 
 
@@ -82,6 +86,9 @@ import { TemperaturesChartsComponent } from './features/dashboards/temperatures-
     WeatherCityComponent,
     ForecastCityLineComponent,
     TemperaturesChartsComponent,
+    PopupRangeSelectorComponent,
+    ActGasChartsComponent,
+    OpDataLineChartComponent,
 
   ],
   imports: [
@@ -99,6 +106,7 @@ import { TemperaturesChartsComponent } from './features/dashboards/temperatures-
       currentDate: calendarReducer,
       opdata: opdataReducer,
       wheater: wheaterForecastReducer,
+      range: rangeReducer,
 
     }, {}),
 
