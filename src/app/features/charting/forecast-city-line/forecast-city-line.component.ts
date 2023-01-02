@@ -47,7 +47,30 @@ export class ForecastCityLineComponent implements OnInit, OnChanges {
           position: 'left',
         },
     },
-
+    plugins:{
+      tooltip:{
+        enabled: true
+      },
+      legend:{
+        labels: {
+        }
+      },
+      datalabels: {
+        formatter: (value, ctx) => {
+          if (ctx.chart.data.labels && value > 0) {
+            //return ctx.chart.data.labels[ctx.dataIndex];  //return label 
+            return "";
+          }
+          return ''
+        }, 
+        font: (ctx) => {
+          return {
+            weight:"bold",
+            size:16
+          };
+        }
+      },
+    }
   };
 
   public lineChartType: ChartType = 'line';

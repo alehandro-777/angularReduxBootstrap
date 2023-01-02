@@ -100,7 +100,7 @@ selectedDay: NgbDateStruct = {
   
   ngOnInit() {
     let date = this.calendar.getToday();
-    let rangeStart = this.calendar.getPrev(date, "d", 10);
+    let rangeStart = this.calendar.getPrev(date, "d", 14);
     this.selectedDay = date;
     this.store.dispatch(calendarActions.newDay({ date }));
     let range = {

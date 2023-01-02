@@ -34,7 +34,13 @@ export class TemperatureMapComponent implements OnInit, OnDestroy {
         backgroundColor: 'rgba(148,159,177,0.2)',
         borderColor: 'rgba(148,159,177,1)',
 
-        fill: 'false',
+        pointBackgroundColor: 'rgba(148,159,177,1)',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgba(148,159,177,0.8)',
+        pointRadius: 2,
+
+        fill: 'origin',
       }
     // ... add dataset here
     ],
@@ -49,6 +55,30 @@ export class TemperatureMapComponent implements OnInit, OnDestroy {
         line: {
           tension: 0.5
         }
+      },
+      plugins:{
+        tooltip:{
+          enabled: true
+        },
+        legend:{
+          labels: {
+          }
+        },
+        datalabels: {
+          formatter: (value, ctx) => {
+            if (ctx.chart.data.labels && value > 0) {
+              //return ctx.chart.data.labels[ctx.dataIndex];  //return label 
+              return "";
+            }
+            return ''
+          }, 
+          font: (ctx) => {
+            return {
+              weight:"bold",
+              size:16
+            };
+          }
+        },
       }
     };
     
