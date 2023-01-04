@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbCalendar, NgbDate, NgbDateStruct, NgbModal, NgbDatepickerI18n } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { tap, map } from 'rxjs';
@@ -16,6 +16,7 @@ import { selectUser } from './state/user.selectors';
 import { NavigationExtras } from '@angular/router';
 
 import { CustomDatepickerI18n, I18n,  } from './datepicker-i18n.service';
+import { User } from './features/login/user.model';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,7 @@ import { CustomDatepickerI18n, I18n,  } from './datepicker-i18n.service';
   providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }], // define custom NgbDatepickerI18n provider
 
 })
-export class AppComponent {
+export class AppComponent implements OnInit, OnDestroy{
 
 sideMenu: TreeMenuNode[];
 selectedNode: TreeMenuNode;
@@ -38,34 +39,58 @@ selectedDay: NgbDateStruct = {
   constructor(private modalService: NgbModal, private store: Store, private calendar: NgbCalendar) { 
     this.sideMenu = [
       {
-        name: "Node1",
+        name: "Відеокадри",
         icon: "",
         childNodes :[
           {
-            name: "Node2",
+            name: "ПСГ",
             icon: "",
             expanded: false,
             childNodes :[
               {
                 childNodes :[],
-                name: "Node4",
+                name: "Обсяг газу карта",
                 icon: "bi-activity",
-                expanded: false
+                expanded: false,
+                payload:{ routerLink:"dashboards/storagemap" }
               },
               {
                 childNodes :[],
-                name: "Node5",
+                name: "Обсяг діаграмма",
                 icon: "bi-activity",
-                expanded: false
-              }              
+                expanded: false,
+                payload:{ routerLink:"/component4" }
+              },
+              {
+                childNodes :[],
+                name: "Тех-акт газ графік",
+                icon: "bi-activity",
+                expanded: false,
+                payload:{ routerLink:"/dashboards/actgascharts" }
+              },                            
             ]
           },
           {
-            childNodes :[],
-            name: "Node3",
-            icon: "bi-activity",
-            expanded: false
-          }
+            name: "Погода",
+            icon: "",
+            expanded: false,
+            childNodes :[
+              {
+                childNodes :[],
+                name: "Карта",
+                icon: "bi-activity",
+                expanded: false,
+                payload:{ routerLink:"/dashboards/wheathermap" }
+              },
+              {
+                childNodes :[],
+                name: "Графіки",
+                icon: "bi-activity",
+                expanded: false,
+                payload:{ routerLink:"/dashboards/wheathercharts" }
+              }              
+            ]
+          },
         ],
         payload: {},
         expanded: false
@@ -85,14 +110,14 @@ selectedDay: NgbDateStruct = {
   user$ = this.store.select(selectUser);
   loader$ = this.store.select(loaderSelectors.selectLoader);
 
+  currentUser : User = {
+    _id:0,
+    name:"Гість"
+  };
 
-  //test test
-  fragment$ = this.store.select(routerSelectors.selectFragment).pipe(tap(f=>console.log("fragment", f)));
-  currentRoute$ = this.store.select(routerSelectors.selectCurrentRoute).pipe(tap(f=>console.log("currentroute",f)), map(x=> JSON.stringify(x)));
-  url$ = this.store.select(routerSelectors.selectUrl).pipe(tap(f=>console.log("url", f)));
-  routeData$ = this.store.select(routerSelectors.selectRouteData).pipe(tap(f=>console.log("routedat", f)), map(x=> JSON.stringify(x)));
-
- 
+  sub1 = this.user$.subscribe(usr=>{
+    this.currentUser = usr;
+  });
 
   onNavigate(url:string, params: NavigationExtras) {
     this.store.dispatch(navigateTo({ url, params }));
@@ -100,7 +125,7 @@ selectedDay: NgbDateStruct = {
   
   ngOnInit() {
     let date = this.calendar.getToday();
-    let rangeStart = this.calendar.getPrev(date, "d", 14);
+    let rangeStart = this.calendar.getPrev(date, "m", 1);
     this.selectedDay = date;
     this.store.dispatch(calendarActions.newDay({ date }));
     let range = {
@@ -114,6 +139,7 @@ selectedDay: NgbDateStruct = {
     this.selectedNode = node;
     //console.log("App Select node", JSON.stringify(this.sideMenu));
     this.treeMenuStateReducer(this.sideMenu, node);
+    this.store.dispatch(navigateTo({ url: node.payload.routerLink, params:{} }));
   }
 
   treeMenuStateReducer(list:TreeMenuNode[], node:TreeMenuNode) {
@@ -141,4 +167,8 @@ selectedDay: NgbDateStruct = {
     this.store.dispatch(calendarActions.newDay({ date }));
 	}
 
+  ngOnDestroy() {
+    this.sub1.unsubscribe();
+    //this.sub2.unsubscribe();
+  }
 }

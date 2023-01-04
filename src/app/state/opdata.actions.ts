@@ -11,6 +11,11 @@ export const loadOpdataRange = createAction(
   props<{ url:string }>()
 );
 
+export const xlsExportRange = createAction(
+  '[Opdata] Xls export range',
+  props<{ objects:number[], parameters:number[], fileName:string, from:string, to:string }>()
+);
+
 export const loadOpSuccess = createAction(
   '[Opdata] Load Sucess',
     props<{ payload:OpDataPacket }>()

@@ -96,6 +96,7 @@ import { OpDataLineChartComponent } from './features/charting/op-data-line-chart
     AppRoutingModule,
     NgbModule,
     NgChartsModule,
+
     
     StoreModule.forRoot({ 
       books: booksReducer, 

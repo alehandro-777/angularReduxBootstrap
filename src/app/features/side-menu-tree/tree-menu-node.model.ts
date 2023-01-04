@@ -2,7 +2,7 @@ export interface TreeMenuNode {
     name: string;
     icon?: string;
     childNodes: TreeMenuNode[];
-    payload?: {};
+    payload?: any;
     expanded: boolean;
     selected?: boolean; 
   }

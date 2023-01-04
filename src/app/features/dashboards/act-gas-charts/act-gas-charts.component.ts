@@ -33,7 +33,7 @@ export class ActGasChartsComponent implements OnInit, OnDestroy {
   }
 
   onRangeChanged(event : NgbDatesRange): void {
-    console.log(event)
+    //console.log(event)
     this.store.dispatch(ra.newDatesRange({range: event}));
     this.store.dispatch(actions.loadOpdataRange({url:"/actgas"}));
   }

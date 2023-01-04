@@ -1,5 +1,5 @@
 
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { Value } from '../../dashboards/temperature-map/temperature-map.models';
@@ -16,6 +16,8 @@ export class ForecastCityLineComponent implements OnInit, OnChanges {
   @Input() data : Map<string, Value[]> =  new Map<string, Value[]>();
   @Input() title = "";
 
+  @Output() exported: EventEmitter<number> = new EventEmitter<number>();
+  
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
@@ -130,5 +132,8 @@ export class ForecastCityLineComponent implements OnInit, OnChanges {
     return v.filter(v=> v.parameter == param);
   }
 
+  export() {
+    this.exported.emit(this.key);
+  }
 }
 

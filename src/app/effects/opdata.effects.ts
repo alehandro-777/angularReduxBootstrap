@@ -7,7 +7,7 @@ import { GasStorageMapService } from '../features/dashboards/gas-storage-map/gas
 import { selectCalendarDateIso } from '../state/calendar.selectors';
 import { of } from 'rxjs';
 import { selectDatesRangeIso } from '../state/range.selectors';
-
+import * as FileSaver from 'file-saver';
 
 @Injectable()
 export class OpdataEffects {
@@ -36,10 +36,25 @@ export class OpdataEffects {
     )
   );
 
+// excel export
+  exportExcell$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(opDataActions.xlsExportRange),
+      withLatestFrom(this.store.select(selectDatesRangeIso)),
+      mergeMap((md) => this.opDataService.getExcel(md[0].objects, md[0].parameters, md[0].from, md[0].to).pipe(
+
+            map( payload => ( FileSaver.saveAs(payload.body, md[0].fileName) ) ),   //=>Success
+            catchError(  (error) => of(opDataActions.loadOpdataError(error)) ) //=> Error
+            )),        
+    ), 
+    { dispatch: false }
+  );
+
 
   constructor(
     private store: Store,
     private actions$: Actions,
-    private opDataService: GasStorageMapService
+    private opDataService: GasStorageMapService,
+
   ) {}
 }

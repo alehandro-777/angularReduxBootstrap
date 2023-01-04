@@ -18,4 +18,11 @@ export class GasStorageMapService {
     return this.http.get<OpDataPacket>(environment.apiBaseUrl + `${url}?from=${from}&to=${to}`, { withCredentials: true });
   }
 
+  getExcel(objects:number[], parameters:number[], from: string, to:string) : Observable<any> { 
+    let obj = JSON.stringify(objects);
+    let params = JSON.stringify(parameters);
+        
+    return this.http.get(`${environment.apiBaseUrl}/excell?from=${from}&to=${to}&objects=${obj}&parameters=${params}`, 
+      { responseType:'blob' as 'json', observe: 'response', withCredentials: true} );
+  }
 }

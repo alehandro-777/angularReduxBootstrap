@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Value } from './temperature-map.models';
 
+import * as dataActions from '../../../state/opdata.actions'
 import * as weatherActions from '../../../state/temperatures.actions'
 import * as weatherSelectors from '../../../state/temperatures.selectors'
 import * as calendarSelectors from '../../../state/calendar.selectors'
@@ -38,7 +39,7 @@ export class TemperatureMapComponent implements OnInit, OnDestroy {
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-        pointRadius: 2,
+        //pointRadius: 2,
 
         fill: 'origin',
       }
@@ -131,5 +132,16 @@ export class TemperatureMapComponent implements OnInit, OnDestroy {
     return v.filter(v=> v.parameter == param);
   }
 
+
+  
+  export() : void {
+    this.store.dispatch(dataActions.xlsExportRange( {
+      objects: [25], 
+      parameters: [1,2,3],
+      fileName: `Україна_загалом_погода_весь_період.xlsx`,   //TODO !!!
+      from: "2020-01-01",
+      to: "2025-01-01"
+      }));
+  }
 }
 
