@@ -4,15 +4,17 @@ import { Store } from '@ngrx/store';
 import { tap, map } from 'rxjs';
 
 import { navigateTo } from './state/navigation.actions';
-import * as userActions from './state/user.actions';
-import * as routerSelectors from './state/router.selectors';
+import * as userActions from './state/auth.actions';
+
 import * as loaderSelectors from './state/loader.selector';
 
 import * as rangeActions from './state/range.actions';
 import * as calendarActions from './state/calendar.actions';
 
 import { TreeMenuNode } from './features/side-menu-tree/tree-menu-node.model';
-import { selectUser } from './state/user.selectors';
+import { selectUser } from './state/auth.selectors';
+
+
 import { NavigationExtras } from '@angular/router';
 
 import { CustomDatepickerI18n, I18n,  } from './datepicker-i18n.service';
@@ -25,7 +27,7 @@ import { User } from './features/login/user.model';
   providers: [I18n, { provide: NgbDatepickerI18n, useClass: CustomDatepickerI18n }], // define custom NgbDatepickerI18n provider
 
 })
-export class AppComponent implements OnInit, OnDestroy{
+export class AppComponent implements OnInit, OnDestroy {
 
 sideMenu: TreeMenuNode[];
 selectedNode: TreeMenuNode;
@@ -89,6 +91,36 @@ selectedDay: NgbDateStruct = {
                 expanded: false,
                 payload:{ routerLink:"/dashboards/wheathercharts" }
               }              
+            ]
+          },
+        ],
+        payload: {},
+        expanded: false
+      },
+      {
+        name: "Адміністрування",
+        icon: "",
+        childNodes :[
+          {
+            name: "Користувачі",
+            icon: "",
+            expanded: false,
+            childNodes :[
+              {
+                childNodes :[],
+                name: "Список",
+                icon: "bi-activity",
+                expanded: false,
+                payload:{ routerLink:"/users/list" }
+              },
+              {
+                childNodes :[],
+                name: "Створити користувача",
+                icon: "bi-activity",
+                expanded: false,
+                payload:{ routerLink:"/users/edit/0" }
+              },
+                           
             ]
           },
         ],

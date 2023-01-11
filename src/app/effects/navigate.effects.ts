@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Router } from '@angular/router';
 import { navigateTo } from '../state/navigation.actions';
-import * as userActions from '../state/user.actions';
+import * as userActions from '../state/auth.actions';
 import { mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { selectQueryParams } from '../state/router.selectors';

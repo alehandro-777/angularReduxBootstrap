@@ -56,8 +56,4 @@ rxjs                            7.5.7
 typescript                      4.7.4
 
 
-          <li class="nav-item"><a class="nav-link" routerLink="/component1" routerLinkActive="active" ariaCurrentWhenActive="page">1 Component</a></li>
-          <li class="nav-item"><a class="nav-link" routerLink="/component2" routerLinkActive="active" ariaCurrentWhenActive="page">2 Component</a></li>
-          <li class="nav-item"><a class="nav-link" routerLink="/component3" routerLinkActive="active" ariaCurrentWhenActive="page">3 Component</a></li>
 
-<img src="assets\utg-logo.png" height="44" width="auto">

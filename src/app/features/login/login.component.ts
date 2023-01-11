@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 
 import {
   login
-} from '../../state/user.actions';
+} from '../../state/auth.actions';
 
 @Component({
   selector: 'app-login',

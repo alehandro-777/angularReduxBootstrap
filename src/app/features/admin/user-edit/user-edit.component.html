@@ -1,0 +1,76 @@
+<div *ngIf="user">
+ 
+    <div>
+      <div class="row">
+        <div class="col-sm-9">
+          <form #frmGame="ngForm" id="frmGame" novalidate (ngSubmit)="save()" novalidate>
+            <!--name-->
+            <div class="row">
+              <label class="control-label col-sm-2" for="txtName">Name:</label>
+              <div class="col-sm-5">
+                <input id="txtName"
+                       type="text"
+                       class="form-control"
+                       [(ngModel)]="user.name"
+                       title="Name"
+                       placeholder="Enter a name ..." [ngModelOptions]="{standalone: true}"
+                />
+              </div>
+            </div>
+            <!--email-->
+            <div class="row">
+              <label class="control-label col-sm-2" for="txtName">Login:</label>
+              <div class="col-sm-5">
+                <input id="txtName"
+                       type="text"
+                       class="form-control"
+                       [(ngModel)]="user.login"
+                       title="Name"
+                       placeholder="Enter a name ..." [ngModelOptions]="{standalone: true}"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="control-label col-sm-2" for="txtName">Role:</label>
+              <div class="col-sm-5">
+                <select [(ngModel)]="user.role" name="role" class="form-control">
+                <option [ngValue]="undefined" disabled>Select Any </option>
+                <option *ngFor="let role of roles" 
+                 [value]="role._id" [selected]="role._id == user.role">
+                  {{ role.name }}
+                </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <label class="control-label col-sm-2" for="txtName">Profile:</label>
+              <div class="col-sm-5">
+                <select [(ngModel)]="user.profile" name="profile" class="form-control">
+                <option [ngValue]="undefined" disabled>Select Any </option>
+                <option *ngFor="let prof of profiles" 
+                 [value]="prof._id" [selected]="prof._id == user.profile">
+                  {{ prof.name }}
+                </option>
+                </select>
+              </div>
+            </div>            
+
+
+            <div class="form-group">
+              <button type="submit" class="btn btn-primary">Save</button>
+              <div class="btn-group">
+                <button type="button"  class="btn btn-secondary" (click)="back()">
+                   Back
+                </button>
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  

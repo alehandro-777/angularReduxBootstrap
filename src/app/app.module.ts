@@ -21,7 +21,7 @@ import { SidebarComponent } from './temp/componets/sidebar/sidebar.component';
 import { SideMenuTreeComponent } from './features/side-menu-tree/side-menu-tree.component';
 import { SideMenuTreeNodeComponent } from './features/side-menu-tree/side-menu-tree-node/side-menu-tree-node.component';
 import { LoginComponent } from './features/login/login.component';
-import { userReducer } from './state/user.reducer';
+import { userReducer } from './state/auth.reducer';
 import { UserEffects } from './effects/user.effects';
 import { NavigateEffects } from './effects/navigate.effects';
 import { HomeComponent } from './features/home/home.component';
@@ -54,6 +54,9 @@ import { PopupRangeSelectorComponent } from './features/range/popup-range-select
 import { rangeReducer } from './state/range.reducers';
 import { ActGasChartsComponent } from './features/dashboards/act-gas-charts/act-gas-charts.component';
 import { OpDataLineChartComponent } from './features/charting/op-data-line-chart/op-data-line-chart.component';
+import { UserListComponent } from './features/admin/user-list/user-list.component';
+import { UserEditComponent } from './features/admin/user-edit/user-edit.component';
+import { user1Reducer } from './state/user.reducer';
 
 
 
@@ -89,6 +92,8 @@ import { OpDataLineChartComponent } from './features/charting/op-data-line-chart
     PopupRangeSelectorComponent,
     ActGasChartsComponent,
     OpDataLineChartComponent,
+    UserListComponent,
+    UserEditComponent,
 
   ],
   imports: [
@@ -108,6 +113,7 @@ import { OpDataLineChartComponent } from './features/charting/op-data-line-chart
       opdata: opdataReducer,
       wheater: wheaterForecastReducer,
       range: rangeReducer,
+      user1: user1Reducer,
 
     }, {}),
 

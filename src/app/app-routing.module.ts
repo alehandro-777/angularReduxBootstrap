@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserEditComponent } from './features/admin/user-edit/user-edit.component';
+import { UserListComponent } from './features/admin/user-list/user-list.component';
 import { BarChartComponent } from './features/charting/bar-chart/bar-chart.component';
 import { ActGasChartsComponent } from './features/dashboards/act-gas-charts/act-gas-charts.component';
 import { GasStorageMapComponent } from './features/dashboards/gas-storage-map/gas-storage-map.component';
@@ -24,7 +26,10 @@ const routes: Routes = [
   { path: 'component2', component: Component2Component, canActivate: [AuthGuard], },
   { path: 'component3', component: Component3Component, canActivate: [AuthGuard], },
   { path: 'component4', component: Component4Component, canActivate: [AuthGuard], },
-  
+
+  { path: 'users/list', component: UserListComponent, canActivate: [AuthGuard], },
+  { path: 'users/edit/:id', component: UserEditComponent, canActivate: [AuthGuard], }, 
+
   { path: 'bar', component: BarChartComponent },
 
   { path: 'login', component: LoginComponent },

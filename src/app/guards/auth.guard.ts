@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectUser } from '../state/user.selectors';
+import { selectUser } from '../state/auth.selectors';
 import { User } from '../features/login/user.model';
 import { navigateTo } from '../state/navigation.actions';
 

@@ -16,14 +16,14 @@ export const selectCalendarDateStruc = createSelector(
 
   export const selectCalendarDateObject = createSelector(
     selectCalendarDate,
-    (date:NgbDate): Date => {
-      return new Date(date.year,date.month-1, date.day)
+    (date: NgbDate): Date => {
+      return new Date(date.year,date.month-1, date.day, 0, 0, 0)
     }
   );
 
   export const selectCalendarDateIso = createSelector(
     selectCalendarDate,
-    (date:NgbDate): string => {
-      return  new Date(date.year,date.month-1, date.day).toISOString();
+    (date: NgbDate): string => {
+      return  new Date(date.year,date.month-1, date.day, 0, 0, 0).toISOString();
     }
   );

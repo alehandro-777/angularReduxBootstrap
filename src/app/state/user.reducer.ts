@@ -1,16 +1,49 @@
 import { createReducer, on } from '@ngrx/store';
 
 import * as userActions from './user.actions';
-import { User } from '../features/login/user.model';
+import { Profile, Role, User, UsersPage, UsersState } from '../features/login/user.model';
 
-export const initialState: User= {
-    _id:0,
-    name: "Guest"
+
+
+export const initialState: UsersState = {
+  selectedPage: 1,
+  rolesSelector: [],
+  profilesSelector:[],
+  pageSize: 30,
+
 };
 
-export const userReducer = createReducer(
+export const user1Reducer = createReducer(
   initialState,
-  on(userActions.loginOk, (state, { currentUser }) => currentUser),
-  on(userActions.logOutOk, (state, {  }) => initialState),
+  on(userActions.fillProfilesSelectorOk, (state, action) => {
+    return {
+      ...state,
+      profilesSelector: action.profiles
+    };
+  }),
+  on(userActions.fillRolesSelectorOK, (state, action) => {
+    return {
+      ...state,
+      rolesSelector: action.roles
+    };
+  }),
+  on(userActions.getUserByIdOk, (state, action) => {
+    return {
+      ...state,
+      selectedUser: action.user
+    };
+  }),
+  on(userActions.editUserOk, (state, action) => {
+    return {
+      ...state,
+      selectedUser: action.user
+    };
+  }),
+  on(userActions.loadUserPageOk, (state, action) => {
+    return {
+      ...state,
+      usersPage: action.userPage
+    };
+  }),
   
 );
